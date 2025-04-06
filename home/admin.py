@@ -5,3 +5,6 @@ from .models import User,Account,Profit
 admin.site.register(User)
 admin.site.register(Account)
 admin.site.register(Profit)
+
+
+

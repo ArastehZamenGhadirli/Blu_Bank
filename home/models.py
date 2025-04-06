@@ -18,22 +18,18 @@ class Account(models.Model):
     phone_number = models.CharField(max_length=10)
     amount = models.FloatField(default=0)
 
-class BaseProfit(models.Model):
-    title = models.CharField(max_length=100)
-    percentage = models.DecimalField(
-        max_digits=5, decimal_places=2, help_text="Profit percentage (e.g., 5 for 5%)"
-    )
-    duration = models.PositiveIntegerField(help_text="Duration in days")
-
-    def __str__(self):
-        return f"{self.title} ({self.percentage}%, {self.duration} days)"
 
 
 class Profit(models.Model):
+    PROFIT_TYPE_CHOICES = [
+        ('monthly', 'Monthly'),
+        ('annually', 'Annually'),
+    ]
     date = models.DateField(auto_now=True)
     account = models.ForeignKey(
         to=Account, on_delete=models.CASCADE, related_name="Account_Profit"
     )
-    base_profit = models.ForeignKey(BaseProfit, on_delete=models.CASCADE, null=True)
+    profit_type = models.CharField(max_length=10, choices=PROFIT_TYPE_CHOICES, default='monthly')
+    
 
 
